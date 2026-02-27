@@ -1,0 +1,27 @@
+.playlist-container {
+  padding: 20px;
+}
+
+.create-playlist input {
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.playlist-item {
+  background: #1e1e1e;
+  padding: 10px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.song-item {
+  display: flex;
+  justify-content: space-between;
+  background: #2a2a2a;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
