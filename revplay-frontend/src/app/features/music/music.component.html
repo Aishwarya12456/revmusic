@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+
+<div class="music-container">
+
+  <div class="song-card" *ngFor="let song of songs">
+
+    <h3>{{ song.title }}</h3>
+    <p>{{ song.artistName }}</p>
+
+    <button (click)="play(song)">
+      ▶ Play
+    </button>
+
+    <button (click)="toggleFavorite(song.id)">
+      {{ isFavorite(song.id) ? '❤️' : '🤍' }}
+    </button>
+
+  </div>
+
+</div>

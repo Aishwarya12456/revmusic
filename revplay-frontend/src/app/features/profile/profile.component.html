@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+
+<div class="profile-container">
+
+  <div class="profile-card">
+
+    <div class="profile-header">
+      <div class="avatar">
+        {{ userName.charAt(0) }}
+      </div>
+      <h2>{{ userName }}</h2>
+      <p>{{ userEmail }}</p>
+    </div>
+
+    <div class="profile-section">
+      <h3>Account Settings</h3>
+
+      <div class="info-row">
+        <span>Name</span>
+        <span>{{ userName }}</span>
+      </div>
+
+      <div class="info-row">
+        <span>Email</span>
+        <span>{{ userEmail }}</span>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="primary-btn">Change Password</button>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+
+  </div>
+
+</div>

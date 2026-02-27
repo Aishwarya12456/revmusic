@@ -1,1 +1,29 @@
-<p>dashboard works!</p>
+<app-navbar></app-navbar>
+
+<div class="dashboard-container">
+
+  <h1>Welcome back, {{ username }} 🎵</h1>
+  <p class="subtitle">Enjoy your music experience</p>
+
+  <!-- Stats Cards -->
+  <div class="stats-container">
+    <div class="stat-card" *ngFor="let stat of stats">
+      <h2>{{ stat.value }}</h2>
+      <p>{{ stat.title }}</p>
+    </div>
+  </div>
+
+  <!-- Recently Played -->
+  <div class="recent-section">
+    <h2>Recently Played</h2>
+
+    <div class="recent-grid">
+      <div class="song-card" *ngFor="let song of recentSongs">
+        <h3>{{ song.title }}</h3>
+        <p>{{ song.artistName }}</p>
+        <button (click)="play(song)">Play</button>
+      </div>
+    </div>
+  </div>
+
+</div>
