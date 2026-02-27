@@ -3,9 +3,11 @@ import { PlaylistService } from '../../service/playlist';
 import { Playlist } from '../../models/playlist';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../../service/player.service';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-playlist',
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.css']
 })

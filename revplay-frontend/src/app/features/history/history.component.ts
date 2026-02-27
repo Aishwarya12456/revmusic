@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoryService } from '../../service/history.component';
+import { HistoryService } from '../../service/history';
 import { ListeningHistory } from '../../models/history';
 import { PlayerService } from '../../service/player.service';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-history',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css']
 })
@@ -28,7 +30,7 @@ export class HistoryComponent implements OnInit {
         this.history = data;
         this.loading = false;
       },
-      error: (err) => {
+     error: (err: any) => {
         console.error(err);
         this.loading = false;
       }

@@ -1,0 +1,41 @@
+<div class="history-container">
+
+  <h2 class="title">
+    🕒 Listening History
+  </h2>
+
+  <div *ngIf="loading" class="loading">
+    Loading history...
+  </div>
+
+  <div *ngIf="!loading && history.length === 0" class="empty">
+    No songs played yet 🎵
+  </div>
+
+  <div 
+    class="history-item"
+    *ngFor="let item of history"
+    (click)="playSong(item.song)"
+  >
+
+    <img 
+      [src]="item.song.coverUrl || 'assets/default-cover.png'"
+      alt="cover"
+      class="cover"
+    />
+
+    <div class="info">
+      <div class="song-title">{{ item.song.title }}</div>
+      <div class="artist">{{ item.song.artist }}</div>
+      <small class="played-time">
+        {{ item.playedAt | date:'short' }}
+      </small>
+    </div>
+
+    <div class="play-btn">
+      ▶
+    </div>
+
+  </div>
+
+</div>
