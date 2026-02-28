@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SongService, Song } from '../../service/song';
 import { PlaylistService, Playlist } from '../../service/playlist';
+import { PlayerService } from '../../service/player.service';
 @Component({
   selector: 'app-songs',
   standalone: true,
@@ -13,20 +14,30 @@ export class MusicComponent implements OnInit {
 
   songs: Song[] = [];
   loading = true;
-  playlists: Playlist[] = [];
-  selectedSongId!: number;
+  playlists: any[] = [];
+  selectedSong: any = null;
   showModal = false;
   userId!: number;
 
   constructor(private songService: SongService,
-              private playlistService: PlaylistService
+              private playlistService: PlaylistService,
+               private playerService: PlayerService
   ) {} 
 
   ngOnInit(): void {
       this.userId = Number(localStorage.getItem('userId'));
     this.loadSongs();
+    this.loadPlaylists();
+    this.songService.getAllSongs().subscribe(data => {
+    console.log("SONGS:", data);
+    this.songs = data;
+  });
   }
-
+  
+loadPlaylists() {
+  this.playlistService.getUserPlaylists(this.userId)
+    .subscribe(data => this.playlists = data);
+}
   loadSongs() {
     this.songService.getAllSongs().subscribe({
       next: (data) => {
@@ -45,8 +56,8 @@ export class MusicComponent implements OnInit {
       this.loadSongs();
     });
   }
-  openModal(songId: number) {
-    this.selectedSongId = songId;
+  openPlaylistModal(song: any) {
+    this.selectedSong = song;
     this.showModal = true;
 
     this.playlistService
@@ -58,12 +69,15 @@ export class MusicComponent implements OnInit {
     this.showModal = false;
   }
 
-  addToPlaylist(playlistId: number) {
-    this.playlistService
-      .addSong(playlistId, this.selectedSongId)
+addToPlaylist(playlistId: number) {
+  this.playlistService
+      .addSongToPlaylist(playlistId, this.selectedSong.id)
       .subscribe(() => {
-        alert("Song added successfully!");
+        alert("Song added!");
         this.closeModal();
       });
-  }
+}
+playSong(song: any) {
+  this.playerService.play(song);
+}
 }

@@ -15,12 +15,14 @@ export class PlayerBarComponent implements OnInit {
   currentSong: Song | null = null;
   progress = 0;
   duration = 0;
+  isPlaying = false;
 
   constructor(public playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.playerService.currentSong$.subscribe(song => {
       this.currentSong = song;
+      this.isPlaying=true;
     });
 
     setInterval(() => {
@@ -38,6 +40,17 @@ export class PlayerBarComponent implements OnInit {
   changeVolume(event: Event) {
     const input = event.target as HTMLInputElement;
     this.playerService.setVolume(Number(input.value));
+  }
+    togglePlay() {
+    if (!this.currentSong) return;
+
+    if (this.isPlaying) {
+      this.playerService.pause();
+      this.isPlaying = false;
+    } else {
+      this.playerService.resume();
+      this.isPlaying = true;
+    }
   }
 
 }

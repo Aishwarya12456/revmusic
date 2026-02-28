@@ -1,41 +1,14 @@
 <div class="player-bar" *ngIf="currentSong">
 
-  <!-- Left: Song Info -->
-  <div class="player-left">
-    <div class="song-details">
-      <h4>{{ currentSong.title }}</h4>
-      <p>{{ currentSong.artist }}</p>
-    </div>
+  <div class="song-info">
+    <h4>{{ currentSong.title }}</h4>
+    <p>{{ currentSong.artist }}</p>
   </div>
 
-  <!-- Center: Controls -->
-  <div class="player-center">
-    <div class="controls">
-      <button (click)="playerService.previous()">⏮</button>
-      <button class="play-btn" (click)="playerService.toggle()">
-        {{ playerService.isPlaying ? '⏸' : '▶' }}
-      </button>
-      <button (click)="playerService.next()">⏭</button>
-    </div>
-
-    <div class="progress-container">
-      <span>{{ progress | number:'1.0-0' }}</span>
-      <input type="range"
-             [max]="duration"
-             [value]="progress"
-             (input)="seek($event)">
-      <span>{{ duration | number:'1.0-0' }}</span>
-    </div>
-  </div>
-
-  <!-- Right: Volume -->
-  <div class="player-right">
-    🔊
-    <input type="range"
-       min="0"
-       max="1"
-       step="0.1"
-       (input)="changeVolume($event)">
+  <div class="controls">
+    <button (click)="togglePlay()">
+      {{ isPlaying ? '⏸' : '▶' }}
+    </button>
   </div>
 
 </div>

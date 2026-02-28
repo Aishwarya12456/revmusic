@@ -35,4 +35,10 @@ export class PlaylistService {
   addSong(playlistId: number, songId: number) {
     return this.http.post(`${this.API}/${playlistId}/song/${songId}`, {});
   }
+  addSongToPlaylist(playlistId: number, songId: number) {
+  return this.http.post(
+    `${this.API}/${playlistId}/song/${songId}`,
+    {}
+  );
+}
 }

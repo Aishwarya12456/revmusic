@@ -14,18 +14,21 @@ export class HistoryComponent implements OnInit {
 
   history: ListeningHistory[] = [];
   loading = true;
+  userId!: number;
+
 
   constructor(
     private historyService: HistoryService,
     private playerService: PlayerService
   ) {}
 
-  ngOnInit(): void {
-    this.loadHistory();
-  }
+ ngOnInit() {
+  this.userId = Number(localStorage.getItem('userId'));
+  this.loadHistory();
+}
 
   loadHistory() {
-    this.historyService.getUserHistory().subscribe({
+    this.historyService.getUserHistory(this.userId).subscribe({
       next: (data) => {
         this.history = data;
         this.loading = false;
@@ -38,6 +41,6 @@ export class HistoryComponent implements OnInit {
   }
 
   playSong(song: any) {
-    this.playerService.playSong(song);
+    this.playerService.play(song);
   }
 }

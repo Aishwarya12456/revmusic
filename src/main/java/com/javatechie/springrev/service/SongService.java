@@ -28,22 +28,30 @@ public class SongService {
 
     // Create a song
     public SongResponse createSong(SongRequest request) {
-        ArtistProfile artist = artistRepository.findById(request.getArtistId())
-                .orElse(null);
-
-        Album album = albumRepository.findById(request.getAlbumId())
-                .orElse(null);
 
         Song song = new Song();
         song.setTitle(request.getTitle());
         song.setGenre(request.getGenre());
         song.setUrl(request.getUrl());
-        song.setArtist(artist);
-        song.setAlbum(album);
+        song.setPlayCount(0);
 
-        songRepository.save(song);
+        // Only set album if provided
+        if (request.getAlbumId() != null) {
+            Album album = albumRepository.findById(request.getAlbumId())
+                    .orElseThrow(() -> new RuntimeException("Album not found"));
+            song.setAlbum(album);
+        }
 
-        return mapToResponse(song);
+        // Only set artist if provided
+        if (request.getArtistId() != null) {
+            ArtistProfile artist = artistRepository.findById(request.getArtistId())
+                    .orElseThrow(() -> new RuntimeException("Artist not found"));
+            song.setArtist(artist);
+        }
+
+        Song saved = songRepository.save(song);
+
+        return mapToResponse(saved);
     }
 
     // Get all songs

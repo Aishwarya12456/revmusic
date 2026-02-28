@@ -55,6 +55,6 @@ export class DashboardComponent implements OnInit {
 
   play(song: Song) {
     this.playerService.setPlaylist(this.recentSongs);
-    this.playerService.playSong(song);
+    this.playerService.play(song);
   }
 }

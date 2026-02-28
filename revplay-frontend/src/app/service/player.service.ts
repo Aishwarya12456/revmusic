@@ -28,17 +28,6 @@ export class PlayerService {
     this.currentIndex = 0;
   }
 
-  playSong(song: any) {
-    this.currentIndex = this.playlist.findIndex(s => s.id === song.id);
-
-    this.audio.src = song.url;
-    this.audio.load();
-    this.audio.play();
-
-    this.currentSongSubject.next(song);
-    this.isPlaying = true;
-  }
-
   toggle() {
     if (this.audio.paused) {
       this.audio.play();
@@ -57,7 +46,7 @@ export class PlayerService {
         ? this.currentIndex - 1
         : this.playlist.length - 1;
 
-    this.playSong(this.playlist[this.currentIndex]);
+    this.play(this.playlist[this.currentIndex]);
   }
 
   next() {
@@ -68,7 +57,7 @@ export class PlayerService {
         ? this.currentIndex + 1
         : 0;
 
-    this.playSong(this.playlist[this.currentIndex]);
+    this.play(this.playlist[this.currentIndex]);
   }
 
   seek(time: number) {
@@ -88,5 +77,25 @@ export class PlayerService {
   }
   pause() {
     this.audio.pause();
+  }
+  play(song: any) {
+
+    if (!song.url) {
+      console.error("Song URL missing");
+      return;
+    }
+
+    this.audio.src = song.url;
+    this.audio.load();
+    this.audio.play();
+
+    this.currentSongSubject.next(song);
+     console.log("PLAY CALLED:", song);
+  }
+ resume() {
+    if (!this.audio.src) return;
+
+    this.audio.play();
+    this.isPlaying = true;
   }
 }

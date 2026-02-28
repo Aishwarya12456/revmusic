@@ -1,57 +1,33 @@
-<div class="page">
+<div class="song-card" *ngFor="let song of songs">
 
-  <h2>🎵 All Songs</h2>
-
-  <div *ngIf="loading">Loading songs...</div>
-
-  <div class="grid">
-
-    <div class="card" *ngFor="let song of songs">
-
-      <div class="info">
-        <h3>{{ song.title }}</h3>
-        <p>{{ song.artist }}</p>
-        <small>{{ song.album }}</small>
-        <span>{{ song.duration }}</span>
-      </div>
-      <button class="add-btn"
-              (click)="openModal(song.id)">
-        ➕ Add to Playlist
-      </button>
-
-
-      <button class="delete-btn"
-              (click)="deleteSong(song.id)">
-        Delete
-      </button>
-
-    </div>
-
+  <div class="song-info">
+    <h4>{{ song.title }}</h4>
+    <p>{{ song.artist}}</p>
   </div>
 
-<!-- MODAL -->
-  <div class="modal" *ngIf="showModal">
+  <div class="song-actions">
+    <button (click)="playSong(song)">▶</button>
 
-    <div class="modal-content">
+    <button (click)="openPlaylistModal(song)">
+      ➕ Add to Playlist
+    </button>
+  </div>
+  <!-- Playlist Modal -->
+<div class="playlist-modal" *ngIf="selectedSong">
 
-      <h3>Select Playlist</h3>
+  <div class="modal-content">
+    <h3>Select Playlist</h3>
 
-      <div *ngFor="let playlist of playlists"
-           class="playlist-option"
-           (click)="addToPlaylist(playlist.id)">
+    <div *ngFor="let playlist of playlists" 
+         class="playlist-option"
+         (click)="addToPlaylist(playlist.id)">
 
-        {{ playlist.name }}
-
-      </div>
-
-      <button class="close-btn"
-              (click)="closeModal()">
-        Cancel
-      </button>
-
+      {{ playlist.name }}
     </div>
 
+    <button (click)="closeModal()">Cancel</button>
   </div>
 
+</div>
 
 </div>

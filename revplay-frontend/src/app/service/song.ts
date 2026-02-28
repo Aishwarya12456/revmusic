@@ -8,8 +8,7 @@ export interface Song {
   artist: string;
   album: string;
   duration: string;
-  audioUrl: string;
-  imageUrl: string;
+   url:string;
 }
 
 @Injectable({

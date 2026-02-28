@@ -13,7 +13,7 @@ export class HistoryService {
 
   constructor(private http: HttpClient) {}
 
-  getUserHistory(): Observable<ListeningHistory[]> {
-    return this.http.get<ListeningHistory[]>(`${this.apiUrl}/user`);
-  }
+  getUserHistory(userId: number) {
+  return this.http.get<any[]>(`${this.apiUrl}/${userId}`);
+}
 }
