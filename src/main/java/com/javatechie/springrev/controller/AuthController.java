@@ -8,13 +8,11 @@ import com.javatechie.springrev.service.AuthService;
 import com.javatechie.springrev.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-
 public class AuthController {
 
     @Autowired
@@ -24,32 +22,40 @@ public class AuthController {
     private JwtService jwtService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private PasswordEncoder passwordEncoder;
 
-    // User registration
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+
         User user = authService.register(request);
         String token = jwtService.generateToken(user.getEmail());
-        return ResponseEntity.ok(new AuthResponse(token, "Registration successful"));
+
+        return ResponseEntity.ok(
+                new AuthResponse(token, "Registration successful", user.getId())
+        );
     }
 
-    // User login
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        try {
-            // Authenticate using Spring Security
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-            );
 
-            // Fetch user and generate JWT
+        try {
+
             User user = authService.getUserByEmail(request.getEmail());
+
+            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                return ResponseEntity.status(401)
+                        .body(new AuthResponse(null, "Invalid credentials", null));
+            }
+
             String token = jwtService.generateToken(user.getEmail());
 
-            return ResponseEntity.ok(new AuthResponse(token, "Login successful"));
+            return ResponseEntity.ok(
+                    new AuthResponse(token, "Login successful", user.getId())
+            );
+
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(new AuthResponse(null, "Invalid credentials"));
+            return ResponseEntity.status(401)
+                    .body(new AuthResponse(null, "Invalid credentials", null));
         }
     }
 }

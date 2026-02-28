@@ -20,7 +20,7 @@
     <div class="recent-grid">
       <div class="song-card" *ngFor="let song of recentSongs">
         <h3>{{ song.title }}</h3>
-        <p>{{ song.artistName }}</p>
+        <p>{{ song.artist }}</p>
         <button (click)="play(song)">Play</button>
       </div>
     </div>

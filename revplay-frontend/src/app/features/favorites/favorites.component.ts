@@ -5,7 +5,7 @@ import { FavoriteService, FavoriteResponse } from '../../service/favorite';
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule],   // 👈 THIS IS REQUIRED
+  imports: [CommonModule],   
   templateUrl: './favorites.html',
   styleUrls: ['./favorites.css']
 })

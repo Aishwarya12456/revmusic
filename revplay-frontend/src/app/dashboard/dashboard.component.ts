@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { PlayerService } from '../service/player.service';
-import { SongService, SongResponse } from '../service/song';
+import { SongService, Song } from '../service/song';
 import { UserService } from '../service/user';
 
 @Component({
@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     { title: 'Users', value: 0 }
   ];
 
-  recentSongs: SongResponse[] = [];
+  recentSongs: Song[] = [];
 
   constructor(
     private playerService: PlayerService,
@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
     // Total Songs
     this.songService.getAllSongs().subscribe({
-      next: (songs: SongResponse[]) => {
+      next: (songs: Song[]) => {
         this.stats[0].value = songs.length;
         this.recentSongs = songs.slice(-4).reverse();
       }
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  play(song: SongResponse) {
+  play(song: Song) {
     this.playerService.setPlaylist(this.recentSongs);
     this.playerService.playSong(song);
   }

@@ -1,89 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../navbar/navbar.component';
-import { SongResponse } from '../../service/song';
-import { SongService } from '../../service/song';
-import { FavoriteService, FavoriteResponse } from '../../service/favorite';
-import { PlayerService } from '../../service/player.service';
-
+import { SongService, Song } from '../../service/song';
+import { PlaylistService, Playlist } from '../../service/playlist';
 @Component({
-  selector: 'app-music',
+  selector: 'app-songs',
   standalone: true,
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule],
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
 
-  songs: SongResponse[] = [];
-  favorites: number[] = [];
-  userId: number = Number(localStorage.getItem('userId'));
+  songs: Song[] = [];
+  loading = true;
+  playlists: Playlist[] = [];
+  selectedSongId!: number;
+  showModal = false;
+  userId!: number;
 
-  constructor(
-    private songService: SongService,
-    private favoriteService: FavoriteService,
-    private playerService: PlayerService
-  ) {}
+  constructor(private songService: SongService,
+              private playlistService: PlaylistService
+  ) {} 
 
   ngOnInit(): void {
+      this.userId = Number(localStorage.getItem('userId'));
     this.loadSongs();
-    this.loadFavorites();
   }
 
-  // 🔹 Load all songs from backend
-  loadSongs(): void {
+  loadSongs() {
     this.songService.getAllSongs().subscribe({
-      next: (data: SongResponse[]) => {
+      next: (data) => {
         this.songs = data;
+        this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading songs', err);
+        console.error(err);
+        this.loading = false;
       }
     });
   }
 
-  // 🔹 Load favorite songs of user
-  loadFavorites(): void {
-    if (!this.userId) return;
-
-    this.favoriteService.getFavorites(this.userId).subscribe({
-      next: (data: FavoriteResponse[]) => {
-        this.favorites = data.map(f => f.songId);
-      },
-      error: (err) => {
-        console.error('Error loading favorites', err);
-      }
+  deleteSong(id: number) {
+    this.songService.deleteSong(id).subscribe(() => {
+      this.loadSongs();
     });
   }
+  openModal(songId: number) {
+    this.selectedSongId = songId;
+    this.showModal = true;
 
-  // 🔹 Check if song is favorite
-  isFavorite(songId: number): boolean {
-    return this.favorites.includes(songId);
+    this.playlistService
+      .getUserPlaylists(this.userId)
+      .subscribe(data => this.playlists = data);
   }
 
-  // 🔹 Toggle favorite
-  toggleFavorite(songId: number): void {
-
-    if (this.isFavorite(songId)) {
-      // Remove favorite
-      this.favoriteService.removeFavorite(this.userId, songId)
-        .subscribe(() => {
-          this.favorites = this.favorites.filter(id => id !== songId);
-        });
-
-    } else {
-      // Add favorite
-      this.favoriteService.addFavorite(this.userId, songId)
-        .subscribe(() => {
-          this.favorites.push(songId);
-        });
-    }
+  closeModal() {
+    this.showModal = false;
   }
 
-  // 🔹 Play song
-  play(song: SongResponse): void {
-    this.playerService.setPlaylist(this.songs);
-    this.playerService.playSong(song);
+  addToPlaylist(playlistId: number) {
+    this.playlistService
+      .addSong(playlistId, this.selectedSongId)
+      .subscribe(() => {
+        alert("Song added successfully!");
+        this.closeModal();
+      });
   }
-
 }

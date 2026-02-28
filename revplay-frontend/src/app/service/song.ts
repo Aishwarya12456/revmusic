@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface SongResponse {
+export interface Song {
   id: number;
   title: string;
-  genre: string;
-  url: string;
-  artistName: string;
-  albumTitle: string;
+  artist: string;
+  album: string;
+  duration: string;
+   url: string;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,11 +20,11 @@ export class SongService {
 
   constructor(private http: HttpClient) {}
 
-  getAllSongs(): Observable<SongResponse[]> {
-  return this.http.get<SongResponse[]>('http://localhost:8081/api/songs');
-}
+  getAllSongs(): Observable<Song[]> {
+    return this.http.get<Song[]>(this.API);
+  }
 
-  getSongById(id: number): Observable<SongResponse> {
-    return this.http.get<SongResponse>(`${this.API}/${id}`);
+  deleteSong(id: number) {
+    return this.http.delete(`${this.API}/${id}`);
   }
 }

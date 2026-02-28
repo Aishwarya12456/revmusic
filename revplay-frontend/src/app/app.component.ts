@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { PlayerBarComponent } from './player-bar/player-bar';
+import { CommonModule } from '@angular/common';
+import { TokenService } from './service/token';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, PlayerBarComponent],
-  template: `
-    <div class="app-container">
-      <app-sidebar></app-sidebar>
-
-      <div class="main-content">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-
-    <app-player-bar></app-player-bar>
-  `,
+  imports: [CommonModule, RouterOutlet, SidebarComponent],
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent {
+
+  constructor(private tokenService: TokenService) {}
+
+  get isLoggedIn(): boolean {
+    return this.tokenService.isLoggedIn();
+  }
+}

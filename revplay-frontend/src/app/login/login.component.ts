@@ -37,10 +37,12 @@ export class LoginComponent {
           // Redirect to dashboard
           this.router.navigate(['/dashboard']);
         },
+        
         error: (error) => {
           console.log("Login Failed", error);
           this.errorMessage = "Invalid Email or Password";
         }
       });
   }
+  
 }

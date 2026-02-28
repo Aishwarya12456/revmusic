@@ -1,26 +1,7 @@
-<h1>this is my employees data</h1>
-<app-sidebar></app-sidebar>
-<router-outlet></router-outlet>
-<app-player-bar></app-player-bar>
-<div *ngIf="user.length > 0">
-  <table>
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Salary</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let users">
-      <td>{{ user.name }}</td>
-      <td>{{ use.age }}</td>
-      <td>{{ use.salary }}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<div class="app-container">
+  <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
 
-<div *ngIf="employees.length===0">
-  <h2>no data found</h2>
+  <div class="main-content" [class.full-width]="!isLoggedIn">
+    <router-outlet></router-outlet>
+  </div>
 </div>

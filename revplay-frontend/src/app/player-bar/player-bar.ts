@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerService } from '../service/player.service';
-import { SongResponse } from '../service/song';
+import { SongService, Song } from '../service/song';
 
 @Component({
   selector: 'app-player-bar',
@@ -12,7 +12,7 @@ import { SongResponse } from '../service/song';
 })
 export class PlayerBarComponent implements OnInit {
 
-  currentSong: SongResponse | null = null;
+  currentSong: Song | null = null;
   progress = 0;
   duration = 0;
 

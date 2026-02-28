@@ -1,28 +1,20 @@
-<div class="login-container">
-  <h2>RevPlay Login</h2>
+<div class="login-wrapper">
 
-  <form (ngSubmit)="login()">
+  <div class="login-card">
+    <h2>RevPlay Login</h2>
 
-    <div>
-      <label>Email</label>
-      <input
-        type="text"
-        [(ngModel)]="email"
-        name="email"
-        required>
-    </div>
-    <div>
-      <label>Password</label>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        required>
-    </div>
+    <input type="email" placeholder="Email"
+      [(ngModel)]="email" />
 
-    <button type="submit">Login</button>
+    <input type="password" placeholder="Password"
+      [(ngModel)]="password" />
 
-  </form>
+    <button (click)="login()">Login</button>
 
-  <p style="color:red">{{ errorMessage }}</p>
+    <p class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+  </div>
+
 </div>

@@ -5,19 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class TokenService {
 
-  setToken(token: string) {
-    localStorage.setItem('token', token);
-  }
-
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  clear() {
-    localStorage.clear();
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
+  clear() {
+    localStorage.removeItem('token');
   }
 }

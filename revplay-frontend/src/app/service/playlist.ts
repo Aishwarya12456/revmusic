@@ -1,39 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Playlist } from '../models/playlist';
-import { environment } from '../../environments/environment';
+
+export interface Playlist {
+  id: number;
+  name: string;
+  songs: any[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaylistService {
 
-  private apiUrl = `${environment.apiUrl}/playlists`;
+  private API = 'http://localhost:8081/api/playlists';
 
   constructor(private http: HttpClient) {}
 
-  getUserPlaylists(): Observable<Playlist[]> {
-    return this.http.get<Playlist[]>(`${this.apiUrl}/user`);
+  getUserPlaylists(userId: number): Observable<Playlist[]> {
+    return this.http.get<Playlist[]>(`${this.API}/${userId}`);
   }
 
-  createPlaylist(name: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, { name });
+  createPlaylist(userId: number, playlist: any) {
+    return this.http.post(`${this.API}/${userId}`, playlist);
   }
 
-  getPlaylistById(id: number): Observable<Playlist> {
-    return this.http.get<Playlist>(`${this.apiUrl}/${id}`);
+  deletePlaylist(id: number) {
+    return this.http.delete(`${this.API}/${id}`);
   }
 
-  addSongToPlaylist(playlistId: number, songId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${playlistId}/add/${songId}`, {});
-  }
-
-  removeSong(playlistId: number, songId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${playlistId}/remove/${songId}`);
-  }
-
-  deletePlaylist(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  addSong(playlistId: number, songId: number) {
+    return this.http.post(`${this.API}/${playlistId}/song/${songId}`, {});
   }
 }

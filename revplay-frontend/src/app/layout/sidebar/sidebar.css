@@ -1,44 +1,43 @@
 .sidebar {
   width: 240px;
-  height: 100vh;
-  background: #000;
-  color: white;
+  background-color: #000;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: 0;
-  top: 0;
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: bold;
   color: #1db954;
   margin-bottom: 30px;
 }
 
-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
 nav a {
+  display: block;
+  padding: 12px;
+  margin-bottom: 10px;
   text-decoration: none;
-  color: #b3b3b3;
-  font-size: 14px;
-  padding: 8px 10px;
+  color: white;
   border-radius: 6px;
   transition: 0.3s;
 }
 
-nav a:hover {
-  color: white;
-  background: #1a1a1a;
+nav a:hover,
+nav a.active {
+  background-color: #1db954;
+  color: black;
 }
 
-nav a.active {
-  background: #282828;
-  color: white;
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  nav a {
+    font-size: 0;
+  }
+
+  nav a::before {
+    font-size: 18px;
+  }
 }

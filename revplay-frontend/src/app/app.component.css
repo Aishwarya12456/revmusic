@@ -1,12 +1,16 @@
 .app-container {
   display: flex;
+  height: 100vh;
+  background-color: #0f0f0f;
+  color: white;
 }
 
 .main-content {
-  margin-left: 240px;
+  flex: 1;
   padding: 30px;
+  overflow-y: auto;
+}
+
+.full-width {
   width: 100%;
-  background: #121212;
-  min-height: 100vh;
-  color: white;
 }

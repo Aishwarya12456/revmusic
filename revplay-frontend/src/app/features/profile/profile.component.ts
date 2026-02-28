@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component';
-import { TokenService } from '../../service/token.service';
+import { TokenService } from '../../service/token';
 import { Router } from '@angular/router';
 
 @Component({

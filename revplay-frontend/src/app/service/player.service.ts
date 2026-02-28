@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SongResponse } from './song';
+import { SongService, Song } from '../service/song';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,8 @@ export class PlayerService {
 
   private audio = new Audio();
 
-  private playlist: SongResponse[] = [];
-  private currentSongSubject = new BehaviorSubject<SongResponse | null>(null);
+  private playlist: Song[] = [];
+  private currentSongSubject = new BehaviorSubject<Song | null>(null);
   currentSong$ = this.currentSongSubject.asObservable();
 
   currentIndex = 0;
@@ -23,12 +23,12 @@ export class PlayerService {
     });
   }
 
-  setPlaylist(songs: SongResponse[]) {
+  setPlaylist(songs: Song[]) {
     this.playlist = songs;
     this.currentIndex = 0;
   }
 
-  playSong(song: SongResponse) {
+  playSong(song: Song) {
     this.currentIndex = this.playlist.findIndex(s => s.id === song.id);
 
     this.audio.src = song.url;
