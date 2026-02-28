@@ -78,24 +78,41 @@ export class PlayerService {
   pause() {
     this.audio.pause();
   }
-  play(song: any) {
+ play(song: any) {
+  if (!song?.url) return;
 
-    if (!song.url) {
-      console.error("Song URL missing");
-      return;
-    }
-
-    this.audio.src = song.url;
-    this.audio.load();
-    this.audio.play();
-
-    this.currentSongSubject.next(song);
-     console.log("PLAY CALLED:", song);
+  // If same song, just resume
+  if (this.audio.src === song.url) {
+    this.resume();
+    return;
   }
- resume() {
-    if (!this.audio.src) return;
 
-    this.audio.play();
-    this.isPlaying = true;
+  this.audio.pause();
+  this.audio.currentTime = 0;
+
+  this.audio.src = song.url;
+
+  this.audio.play()
+    .then(() => {
+      this.currentSongSubject.next(song);
+      this.currentSongSubject.next(true);
+    })
+    .catch(err => {
+      console.error("Audio play error:", err);
+    });
+}
+  resume() {
+    this.audio.play()
+      .then(() => {
+        this.currentSongSubject.next(true);
+      })
+      .catch(err => console.error("Resume error:", err));
+  }
+
+  // ⏹ STOP (optional)
+  stop() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.currentSongSubject.next(false);
   }
 }
