@@ -8,9 +8,9 @@ import { SongService, Song } from '../service/song';
 export class PlayerService {
 
   private audio = new Audio();
+  private currentSongSubject = new BehaviorSubject<any>(null);
 
   private playlist: Song[] = [];
-  private currentSongSubject = new BehaviorSubject<Song | null>(null);
   currentSong$ = this.currentSongSubject.asObservable();
 
   currentIndex = 0;
@@ -28,7 +28,7 @@ export class PlayerService {
     this.currentIndex = 0;
   }
 
-  playSong(song: Song) {
+  playSong(song: any) {
     this.currentIndex = this.playlist.findIndex(s => s.id === song.id);
 
     this.audio.src = song.url;
@@ -85,5 +85,8 @@ export class PlayerService {
 
   getDuration(): number {
     return this.audio.duration || 0;
+  }
+  pause() {
+    this.audio.pause();
   }
 }

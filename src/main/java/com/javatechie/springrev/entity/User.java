@@ -1,5 +1,6 @@
 package com.javatechie.springrev.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,9 +31,11 @@ public class User {
     private List<Favorite> favorites = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ListeningHistory> listeningHistories = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Playlist> playlists = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)

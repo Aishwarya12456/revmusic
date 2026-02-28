@@ -6,6 +6,9 @@ export interface Playlist {
   id: number;
   name: string;
   songs: any[];
+   description: string;
+  active: boolean;
+  isPublic: boolean;
 }
 
 @Injectable({

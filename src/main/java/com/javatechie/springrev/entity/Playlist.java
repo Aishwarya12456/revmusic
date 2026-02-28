@@ -1,5 +1,7 @@
 package com.javatechie.springrev.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
@@ -22,10 +24,12 @@ public class Playlist {
     private Boolean isPublic;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<PlaylistSong> playlistSongs = new ArrayList<>();
     private Boolean active=true;  // primitive boolean
 }

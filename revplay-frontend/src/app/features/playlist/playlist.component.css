@@ -1,16 +1,29 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+.playlist-container {
+  padding: 30px;
+  color: white;
 }
 
-.card {
+.playlist-card {
   background: #1e1e1e;
   padding: 20px;
-  border-radius: 12px;
-  transition: 0.3s;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
 }
 
-.card:hover {
-  background: #2a2a2a;
+.playlist-card h3 {
+  margin: 0 0 10px;
+}
+
+button {
+  background: #1db954;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1ed760;
 }

@@ -1,5 +1,6 @@
 package com.javatechie.springrev.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,10 @@ public class ListeningHistory {
     private LocalDateTime listenedAt;
 
     @ManyToOne
+    @JsonBackReference   // ✅ ADD THIS
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "song_id")
     private Song song;
 }

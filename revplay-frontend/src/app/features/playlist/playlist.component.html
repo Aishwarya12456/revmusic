@@ -1,20 +1,20 @@
-<div class="page">
+<div class="playlist-container">
 
   <h2>📁 My Playlists</h2>
 
-  <div class="grid">
+  <div *ngIf="playlists.length === 0">
+    <p>No playlists found.</p>
+  </div>
 
-    <div class="card" *ngFor="let playlist of playlists">
+  <div class="playlist-card" *ngFor="let playlist of playlists">
 
-      <h3>{{ playlist.name }}</h3>
+    <h3>{{ playlist.name }}</h3>
 
-      <p>{{ playlist.songs.length }} Songs</p>
+    <p>{{ playlist.description }}</p>
 
-      <button (click)="deletePlaylist(playlist.id)">
-        Delete
-      </button>
-
-    </div>
+    <button (click)="deletePlaylist(playlist.id)">
+      Delete
+    </button>
 
   </div>
 

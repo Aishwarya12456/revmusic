@@ -30,10 +30,11 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           console.log("Login Success", response);
+// ✅ store token
+      localStorage.setItem('token', response.token);
 
-          // Save JWT token
-          localStorage.setItem('token', response.token);
-
+      // ✅ store userId
+      localStorage.setItem('userId', response.userId.toString());
           // Redirect to dashboard
           this.router.navigate(['/dashboard']);
         },

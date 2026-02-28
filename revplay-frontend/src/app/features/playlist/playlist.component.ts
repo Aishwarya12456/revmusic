@@ -17,17 +17,28 @@ export class PlaylistComponent implements OnInit {
   constructor(private playlistService: PlaylistService) {}
 
   ngOnInit(): void {
-    this.userId = Number(localStorage.getItem('userId'));
-    this.loadPlaylists();
+
+  const storedId = localStorage.getItem('userId');
+
+  if (!storedId) {
+    console.error("UserId not found in localStorage!");
+    return;
   }
 
-  loadPlaylists() {
-    this.playlistService.getUserPlaylists(this.userId)
-      .subscribe(data => this.playlists = data);
-  }
+  this.userId = Number(storedId);
+
+  this.loadPlaylists();
+}
 
   deletePlaylist(id: number) {
     this.playlistService.deletePlaylist(id)
       .subscribe(() => this.loadPlaylists());
   }
+  loadPlaylists() {
+  this.playlistService.getUserPlaylists(this.userId)
+    .subscribe(data => {
+      console.log("PLAYLIST RESPONSE:", data);
+      this.playlists = data;
+    });
+}
 }
