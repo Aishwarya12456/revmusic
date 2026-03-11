@@ -180,11 +180,7 @@ database/
 * Favorites Management
 * Listening History
 
-# 🧪 Testing
 
-Testing documentation is available in:
-
-TESTING_COMPLETE.md
 
 # 📌 Future Improvements
 
